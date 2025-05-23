@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { toast } from "sonner";
 import api from "../utils/api";
-import { User } from "../types";
+import type { User } from "../types";
 
 interface AuthState {
   user: User | null;
