@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { toast } from "@sonner/react";
+import { toast } from "sonner";
 import api from "../utils/api";
-import { User, MemoField } from "../types";
+import type { User, MemoField } from "../types";
 
 interface AdminState {
   users: User[];
