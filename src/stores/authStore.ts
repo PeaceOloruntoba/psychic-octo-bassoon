@@ -34,13 +34,14 @@ export const useAuthStore = create<AuthState>((set) => ({
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const response = await api.get("/api/auth/me", {
+        const response = await api.get("/api/users/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
         set({ user: response.data, token });
-      } catch (error) {
+      } catch (error: any) {
         set({ user: null, token: null });
         localStorage.removeItem("token");
+        toast.error("Session expired, please log in again");
       }
     }
   },
