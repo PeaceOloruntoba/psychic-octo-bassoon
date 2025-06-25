@@ -26,7 +26,7 @@ export interface Memo {
   status: Map<
     string,
     {
-      status: "sent" | "delivered" | "read" | "acknowledged";
+      status: "sent" | "delivered" | "read" | "acknowledged" | "archived";
       timestamp: string;
     }
   >;
