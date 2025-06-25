@@ -22,7 +22,7 @@ export interface Memo {
   sender: { _id: string; name: string; email: string };
   recipients: string[];
   department?: string;
-  content: { [key: string]: string | File };
+  content: { title: string, [key: string]: string | File };
   status: Map<
     string,
     {
