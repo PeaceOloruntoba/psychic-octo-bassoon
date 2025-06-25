@@ -4,6 +4,7 @@ import api from "../utils/api";
 import type { User } from "../types";
 
 interface AuthState {
+  response : {},
   user: User | null;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
@@ -14,10 +15,11 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: null,
+  response: {},
   login: async (email, password) => {
     try {
       const response = await api.post("/api/auth/login", { email, password });
-      set({ user: response.data, token: response.data.token });
+      set({ user: response.data, token: response.data.token, response: response });
       localStorage.setItem("token", response.data.token);
       toast.success("Logged in successfully");
     } catch (error: any) {
