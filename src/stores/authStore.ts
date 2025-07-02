@@ -4,10 +4,11 @@ import api from "../utils/api";
 import type { User } from "../types";
 
 interface AuthState {
-  response : {},
+  response: {};
   user: User | null;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<void>;
   logout: () => void;
   loadUser: () => Promise<void>;
 }
@@ -19,7 +20,36 @@ export const useAuthStore = create<AuthState>((set) => ({
   login: async (email, password) => {
     try {
       const response = await api.post("/api/auth/login", { email, password });
-      set({ user: response.data, token: response.data.token, response: response });
+      set({
+        user: response.data,
+        token: response.data.token,
+        response: response,
+      });
+      localStorage.setItem("token", response.data.token);
+      toast.success("Logged in successfully");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Login failed");
+      throw error;
+    }
+  },
+  signUp: async (
+    email,
+    password,
+    name = "Admin Main",
+    department = "Admin Department"
+  ) => {
+    try {
+      const response = await api.post("/api/auth/signup", {
+        email,
+        password,
+        name,
+        department,
+      });
+      set({
+        user: response.data,
+        token: response.data.token,
+        response: response,
+      });
       localStorage.setItem("token", response.data.token);
       toast.success("Logged in successfully");
     } catch (error: any) {
